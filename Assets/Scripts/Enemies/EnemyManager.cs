@@ -30,10 +30,16 @@ public class EnemyManager
         Handler.CoolDownTime -= Time.deltaTime;
     } 
 
+    protected void EnemyMovementEventHandler(EnemyMovementEvent e)
+    {
+        e.Agent.SetDestination(Handler.House.position);
+    }
+
     #endregion
 
     #region Functions
 
+    // Spawns diffrent enemies and keeps their Position inside the platform area
     void SpawnEnemies(GameObject enemyObject)
     {
         Collider cubeCollider = Handler.Platform.GetComponent<Collider>();
@@ -48,5 +54,8 @@ public class EnemyManager
         MonoHelper.Instance.InstantiateObject(enemyObject, spawnPosition, Quaternion.identity);
 
     }
+
+
+
     #endregion
 }

@@ -19,4 +19,8 @@ public class LevelHandler : MonoBehaviour
     public TMP_Text TimerCount;
     public TMP_Text WaveCount;
     public TMP_Text CoinCount;
+
+    [Space(10)]
+    [Header("GameObjects")]
+    public Transform HouseSlider;
 }

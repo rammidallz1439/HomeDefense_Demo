@@ -7,6 +7,7 @@ public class EnemyHandler : MonoBehaviour
     [Header("GameObjects")]
     public Transform EnemySpawnPoint;
     public Transform Platform;
+    public Transform House;
 
     [Space(10)]
     [Header("Data Structures")]

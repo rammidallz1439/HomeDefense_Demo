@@ -16,6 +16,7 @@ public class EnemyController : EnemyManager, IController
     public void OnRegisterListeners()
     {
         EventManager.Instance.AddListener<EnemySpawnEvent>(EnemySpawnEventHandler);
+        EventManager.Instance.AddListener<EnemyMovementEvent>(EnemyMovementEventHandler);
     }
 
     public void OnRelease()
@@ -25,6 +26,7 @@ public class EnemyController : EnemyManager, IController
     public void OnRemoveListeners()
     {
         EventManager.Instance.RemoveListener<EnemySpawnEvent>(EnemySpawnEventHandler);
+        EventManager.Instance.RemoveListener<EnemyMovementEvent>(EnemyMovementEventHandler);
 
     }
 

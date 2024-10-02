@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using Vault;
 
 public class Enemy : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private float _speed;
+    [SerializeField] private NavMeshAgent _agent;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        _agent.speed = _speed;
+    }
+    private void Update()
+    {
+        EventManager.Instance.TriggerEvent(new EnemyMovementEvent(_agent));
     }
 }
