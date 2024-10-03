@@ -35,3 +35,8 @@ public struct EnemyMovementEvent : GameEvent
         Agent = agent;
     }
 }
+
+public struct MakeGridEvent : GameEvent
+{
+
+}

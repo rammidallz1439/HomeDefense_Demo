@@ -35,6 +35,11 @@ public class EnemyManager
         e.Agent.SetDestination(Handler.House.position);
     }
 
+
+    protected void MakeGridEventHandler(MakeGridEvent e)
+    {
+
+    }
     #endregion
 
     #region Functions

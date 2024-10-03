@@ -33,6 +33,14 @@ public class EnemyData
 
 }
 
+[System.Serializable]
+public class GridData
+{
+    public List<bool> grid; 
+    public int rows;    
+    public int columns;    
+}
+
 #endregion
 
 #region Enums

@@ -36,6 +36,7 @@ public class LevelController : LevelManager, IController,ITick
     public void OnUpdate()
     {
         EventManager.Instance.TriggerEvent(new EnemySpawnEvent(Handler.CurrentWave,Handler.Timer));
+        MonoHelper.Instance.FaceCamera(Handler.Camera, Handler.HouseSlider.transform);
     }
 
     public void OnVisible()

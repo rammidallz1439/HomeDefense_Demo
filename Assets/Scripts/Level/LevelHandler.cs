@@ -8,6 +8,7 @@ public class LevelHandler : MonoBehaviour
     [Header("Level Details")]
     public LevelScriptable LevelDetails;
     public Wave CurrentWave = null;
+    public Camera Camera;
 
     [Space(10)]
     [Header("Data")]
@@ -23,4 +24,5 @@ public class LevelHandler : MonoBehaviour
     [Space(10)]
     [Header("GameObjects")]
     public Transform HouseSlider;
+
 }
