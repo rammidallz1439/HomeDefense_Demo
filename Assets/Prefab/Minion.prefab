@@ -131,11 +131,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c274d062b2de44d8f8c1c56ca92679, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 1.7
+  _speed: 2
   _agent: {fileID: 2999885240473746387}
   Health: 0
   _healthBar: {fileID: 973678331436045441}
   _worldCanvas: {fileID: 1928087560698847149}
+  _dropValue: 10
+  _Coin: {fileID: 6962304540837371318, guid: 17dc0b7eba3a87a49a6f2789f4bb7080, type: 3}
+  AttackPower: 10
 --- !u!195 &2999885240473746387
 NavMeshAgent:
   m_ObjectHideFlags: 0

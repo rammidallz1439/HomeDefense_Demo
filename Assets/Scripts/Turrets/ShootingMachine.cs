@@ -13,6 +13,12 @@ public class ShootingMachine : MonoBehaviour
 
     public float CoolDown;
     public float FireRate;
+
+    [Space(10)]
+    [Header("Laser Specific")]
+    public Bullet LaserPointer = null;
+
+
     private void Start()
     {
         CheckTurretType();
@@ -32,6 +38,10 @@ public class ShootingMachine : MonoBehaviour
         else if (TurretDataScriptable is RocketShooter rocket)
         {
             turretAction = new RocketShooterAction(this);
+        }
+        else if (TurretDataScriptable is LaserShooter laser)
+        {
+            turretAction = new LaserShooterAction(this);
         }
     }
 }

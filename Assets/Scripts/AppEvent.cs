@@ -157,3 +157,23 @@ public struct CalcualteRocketVelocityEvent : GameEvent
         Gravity = gravity;
     }
 }
+
+
+public struct CoinDobberAnimation : GameEvent 
+{
+    public GameObject CoinPrefab;
+    public CoinDobberAnimation(GameObject coinPrefab)
+    {
+        CoinPrefab = coinPrefab;
+    }
+}
+
+public struct LaserShootEvent : GameEvent
+{
+    public ShootingMachine ShootingMachine;
+
+    public LaserShootEvent(ShootingMachine shootingMachine)
+    {
+        ShootingMachine = shootingMachine;
+    }
+}

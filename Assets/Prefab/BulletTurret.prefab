@@ -52,7 +52,8 @@ MonoBehaviour:
   TurretDataScriptable: {fileID: 11400000, guid: 6e1ca39ce043bfe48a05960d8eb61e6d,
     type: 2}
   CoolDown: 0
-  FireRate: 1
+  FireRate: 1.2
+  LaserPointer: {fileID: 0}
 --- !u!1 &3732445364946551257
 GameObject:
   m_ObjectHideFlags: 0

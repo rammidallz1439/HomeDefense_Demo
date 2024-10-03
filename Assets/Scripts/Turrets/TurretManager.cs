@@ -111,6 +111,26 @@ public class TurretManager
     }
 
 
+    protected void LaserShootEventHandler(LaserShootEvent e)
+    {
+        if (e.ShootingMachine.CoolDown <= 0)
+        {
+            if (e.ShootingMachine.Target != null && e.ShootingMachine.TurretDataScriptable != null)
+            {
+                if(e.ShootingMachine.LaserPointer != null)
+                {
+                    e.ShootingMachine.LaserPointer.gameObject.SetActive(true);
+                    e.ShootingMachine.LaserPointer.transform.position = e.ShootingMachine.Target.transform.position + new Vector3(0, 1.5f, 0);
+                    e.ShootingMachine.LaserPointer.AttackPower = e.ShootingMachine.TurretDataScriptable.AttackPower;
+                    e.ShootingMachine.LaserPointer.Target = e.ShootingMachine.Target.transform;
+                }
+               
+            }
+            e.ShootingMachine.CoolDown = 1f / e.ShootingMachine.FireRate;
+        }
+        e.ShootingMachine.CoolDown -= Time.deltaTime;
+    }
+
     #endregion
 
     #region Functions

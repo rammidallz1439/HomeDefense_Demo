@@ -1,7 +1,9 @@
 using DG.Tweening;
+using MEC;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager
 {
@@ -15,7 +17,8 @@ public class LevelManager
         Handler.CoinCount.text = GlobalManager.Instance.TotalCoins.ToString();
         Handler.Timer = Handler.CurrentWave.WaveTime;
 
-
+        Handler.RestartButton.onClick.AddListener(() => { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); });
+        Handler.PlayAgainButton.onClick.AddListener(() => { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); });
     }
 
     protected void BaseSelectedEventHandler(BaseSelectedEvent e)
@@ -72,9 +75,34 @@ public class LevelManager
 
     }
 
+    protected void CoinDobberAnimationHandler(CoinDobberAnimation e)
+    {
+        Vector3 coinScreenPosition = Camera.main.WorldToScreenPoint(e.CoinPrefab.transform.position);
+
+        Vector3 targetScreenPosition = Handler.CoinCount.rectTransform.position;
+
+        Vector3 targetWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(targetScreenPosition.x, targetScreenPosition.y, coinScreenPosition.z));
+
+        Timing.RunCoroutine(DelayCoinsDeath(e.CoinPrefab, targetWorldPosition).CancelWith(e.CoinPrefab));
+    }
+
+
     #endregion
 
     #region Functions
+    IEnumerator<float> DelayCoinsDeath(GameObject coin, Vector3 targetWorldPosition)
+    {
+        yield return Timing.WaitForSeconds(0.5f);
+        coin.transform.DOMove(targetWorldPosition, 0.5f)
+              .SetEase(Ease.Linear)
+              .OnComplete(() =>
+              {
+                  Handler.CoinCount.text = GlobalManager.Instance.TotalCoins.ToString();
+                  MonoHelper.Instance.DestroyObject(coin);
+              })
+              .WaitForCompletion();
+    }
+
     void UpdateTimerDisplay(float timeToDisplay)
     {
         int minutes = Mathf.FloorToInt(timeToDisplay / 60);
@@ -84,10 +112,31 @@ public class LevelManager
 
     void TimerEnded()
     {
-        Handler.CurrentWaveCount++;
-        Handler.WaveCount.text = "Wave: " + Handler.CurrentWaveCount + "/" + Handler.LevelDetails.WaveData.Waves.Count;
-        Handler.CurrentWave = Handler.LevelDetails.WaveData.Waves[Handler.CurrentWaveCount - 1];
-        Handler.Timer = Handler.CurrentWave.WaveTime;
+
+
+        if (Handler.CurrentWaveCount >= Handler.LevelDetails.WaveData.Waves.Count)
+        {
+            Enemy[] enemies = Object.FindObjectsOfType<Enemy>();
+            if (enemies.Length > 0)
+            {
+                foreach (Enemy item in enemies)
+                {
+                    MonoHelper.Instance.DestroyObject(item.gameObject);
+                }
+            }
+
+            Handler.LevelCompleted = true;
+            Handler.LevelSucessPanel.SetActive(true);
+            Handler.Timer = 0;
+            UpdateTimerDisplay(Handler.Timer);
+        }
+        else
+        {
+            Handler.CurrentWaveCount++;
+            Handler.WaveCount.text = "Wave: " + Handler.CurrentWaveCount + "/" + Handler.LevelDetails.WaveData.Waves.Count;
+            Handler.CurrentWave = Handler.LevelDetails.WaveData.Waves[Handler.CurrentWaveCount - 1];
+            Handler.Timer = Handler.CurrentWave.WaveTime;
+        }
     }
     #endregion
 }

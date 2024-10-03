@@ -44,3 +44,20 @@ public class RocketShooterAction : ITurretAction
 
     }
 }
+
+public class LaserShooterAction : ITurretAction
+{
+    private ShootingMachine shootingMachine;
+
+    public LaserShooterAction(ShootingMachine shootingMachine)
+    {
+        this.shootingMachine = shootingMachine;
+    }
+
+    public void Excute()
+    {
+        EventManager.Instance.TriggerEvent(new FindTargetEvent(shootingMachine));
+
+        EventManager.Instance.TriggerEvent(new LaserShootEvent(shootingMachine));   
+    }
+}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e5398edad189ea4896e3ca05fee6e0e, type: 3}
   m_Name: Minion
   m_EditorClassIdentifier: 
-  Health: 20
+  Health: 30
   EnemyPrefab: {fileID: 6852659035618061803, guid: 8802abc6e2e1958498fe7195ec795626,
     type: 3}
   EnemyType: 1

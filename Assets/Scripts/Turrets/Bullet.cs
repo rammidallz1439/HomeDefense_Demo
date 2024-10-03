@@ -37,7 +37,11 @@ public class Bullet : MonoBehaviour
     {
         CheckAttackType(_bulletType, other);
         if (other.gameObject.tag is "Enemy" || other.gameObject.tag is "Ground")
-            Vault.ObjectPoolManager.Instance.ReturnToPool(gameObject);
+        {
+            if (_bulletType != BulletType.Laser)
+                Vault.ObjectPoolManager.Instance.ReturnToPool(gameObject);
+
+        }
 
     }
 
@@ -76,6 +80,18 @@ public class Bullet : MonoBehaviour
                     EventManager.Instance.TriggerEvent(new RocketBlastEvent(AttackPower, gameObject, _blastRadius));
                 break;
             case BulletType.Laser:
+                if (other.gameObject.tag is "Enemy")
+                {
+                    if (other.transform != null)
+                        other.transform.GetComponent<Enemy>().TakeDamage(AttackPower);
+
+                    MEC.Timing.CallDelayed(0.3f, () =>
+                    {
+                        transform.position = transform.parent.transform.position;
+                        gameObject.SetActive(false);
+                    });
+
+                }
                 break;
             default:
                 break;

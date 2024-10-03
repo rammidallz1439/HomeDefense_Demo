@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,9 @@ public class Enemy : MonoBehaviour
     public float Health;
     [SerializeField] private Slider _healthBar;
     [SerializeField] private Canvas _worldCanvas;
+    [SerializeField] private int _dropValue;
+    [SerializeField] private GameObject _Coin;
+    public float AttackPower;
     private void Start()
     {
         _agent.speed = _speed;
@@ -36,7 +40,36 @@ public class Enemy : MonoBehaviour
 
         if (Health <= 0)
         {
+            DropCoins();
             Destroy(gameObject);
         }
     }
+
+    void DropCoins()
+    {
+        GameObject coin = null;
+        if (_dropValue <= 10)
+        {
+            for (int i = 0; i < GameConstants.SmallDropValue; i++)
+            {
+                 coin = Instantiate(_Coin, transform.position, Quaternion.identity);
+            }
+        }else if(_dropValue <= 20)
+        {
+            for (int i = 0; i < GameConstants.MediumDropValue; i++)
+            {
+                 coin = Instantiate(_Coin, transform.position, Quaternion.identity);
+            }
+        }
+        else if(_dropValue > 20)
+        {
+            for (int i = 0; i < GameConstants.LargeDropValue; i++)
+            {
+                 coin = Instantiate(_Coin, transform.position, Quaternion.identity);
+            }
+        }
+        GlobalManager.Instance.AddCoins(_dropValue);
+    }
+
+  
 }

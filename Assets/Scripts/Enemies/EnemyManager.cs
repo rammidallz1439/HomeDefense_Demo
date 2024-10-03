@@ -10,26 +10,25 @@ public class EnemyManager
     #region EventHandlers
     protected void EnemySpawnEventHandler(EnemySpawnEvent e)
     {
-        if(Handler.CoolDownTime <= 0)
+        if (Handler.CoolDownTime <= 0)
         {
             foreach (EnemyData item in e.Wave.EnemyData)
             {
-                if (item.TimeToStart <= 0 )
+                if (item.TimeToStart <= 0)
                 {
-                    SpawnEnemies(item.EnemyScriptable.EnemyPrefab,item);
+                    SpawnEnemies(item.EnemyScriptable.EnemyPrefab, item);
                 }
-                else
+
+                if (e.Timer <= e.Wave.WaveTime - item.TimeToStart)
                 {
-                    if (e.Timer <= item.TimeToStart)
-                    {
-                        SpawnEnemies(item.EnemyScriptable.EnemyPrefab,item);
-                    }
+                    SpawnEnemies(item.EnemyScriptable.EnemyPrefab, item);
                 }
+
             }
-            Handler.CoolDownTime = 1f/Handler.SpawnRate;
+            Handler.CoolDownTime = 1f / Handler.SpawnRate;
         }
         Handler.CoolDownTime -= Time.deltaTime;
-    } 
+    }
 
     protected void EnemyMovementEventHandler(EnemyMovementEvent e)
     {
@@ -39,31 +38,59 @@ public class EnemyManager
 
     protected void FindTargetEventHandler(FindTargetEvent e)
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        float shortestDistance = Mathf.Infinity;
-        GameObject nearestEnemy = null;
-
-        foreach (GameObject enemy in enemies)
+        if (e.ShootingMachine.Target == null)
         {
-            float distanceToEnemy = Vector3.Distance(e.ShootingMachine.transform.position, enemy.transform.position);
-            if (distanceToEnemy < shortestDistance)
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+            float shortestDistance = Mathf.Infinity;
+            GameObject nearestEnemy = null;
+
+            foreach (GameObject enemy in enemies)
             {
-                shortestDistance = distanceToEnemy;
-                nearestEnemy = enemy;
+                if (enemy != null)
+                {
+                    float distanceToEnemy = Vector3.Distance(e.ShootingMachine.transform.position, enemy.transform.position);
+                    if (distanceToEnemy < shortestDistance)
+                    {
+                        shortestDistance = distanceToEnemy;
+                        nearestEnemy = enemy;
+                    }
+                }
+                else
+                {
+
+                    e.ShootingMachine.Target = null;
+                }
+            }
+
+            if (nearestEnemy != null && shortestDistance <= e.ShootingMachine.TurretDataScriptable.Range)
+            {
+                Enemy enemyComponent = nearestEnemy.GetComponent<Enemy>();
+
+                if (enemyComponent != null)
+                {
+                    e.ShootingMachine.Target = enemyComponent;
+                }
+                else
+                {
+                    e.ShootingMachine.Target = null;
+                }
+
+            }
+            else
+            {
+                e.ShootingMachine.Target = null;
             }
         }
 
-        if (nearestEnemy != null && shortestDistance <= e.ShootingMachine.TurretDataScriptable.Range)
-        {
-            e.ShootingMachine.Target = nearestEnemy.transform.GetComponent<Enemy>();
-        }
+
     }
+
     #endregion
 
     #region Functions
 
-    // Spawns diffrent enemies and keeps their Position inside the platform area
-    void SpawnEnemies(GameObject enemyObject,EnemyData data)
+    void SpawnEnemies(GameObject enemyObject, EnemyData data)
     {
         Collider cubeCollider = Handler.Platform.GetComponent<Collider>();
 

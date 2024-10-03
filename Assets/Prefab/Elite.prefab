@@ -131,11 +131,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c274d062b2de44d8f8c1c56ca92679, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 2.5
+  _speed: 3
   _agent: {fileID: 3188946922474840313}
   Health: 0
   _healthBar: {fileID: 8250165170681811089}
   _worldCanvas: {fileID: 7294911799436663741}
+  _dropValue: 50
+  _Coin: {fileID: 6962304540837371318, guid: 17dc0b7eba3a87a49a6f2789f4bb7080, type: 3}
+  AttackPower: 30
 --- !u!195 &3188946922474840313
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -303,6 +306,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HealthBarCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7354726727525117872, guid: ef18061a883c93144a44f04a66b57d0e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 3.29
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
