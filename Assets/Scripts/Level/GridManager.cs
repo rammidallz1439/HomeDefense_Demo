@@ -70,7 +70,7 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+  /*  private void OnDrawGizmos()
     {
         if (boxCollider == null)
             return;
@@ -113,7 +113,7 @@ public class GridManager : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 
     // Method to load grid data from JSON
     private void LoadGridData()

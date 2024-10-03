@@ -17,6 +17,9 @@ public class LevelController : LevelManager, IController,ITick
     public void OnRegisterListeners()
     {
         EventManager.Instance.AddListener<IntialLevelSetUpEvent>(InitialLevelSetupEventHandler);
+        EventManager.Instance.AddListener<BaseSelectedEvent>(BaseSelectedEventHandler);
+        EventManager.Instance.AddListener<SpawnTurretEvent>(SpawnTurretEventHandler);
+        EventManager.Instance.AddListener<UpdateTimerEvent>(UpdateTimerEventHandler);
     }
 
     public void OnRelease()
@@ -26,7 +29,9 @@ public class LevelController : LevelManager, IController,ITick
     public void OnRemoveListeners()
     {
         EventManager.Instance.RemoveListener<IntialLevelSetUpEvent>(InitialLevelSetupEventHandler);
-
+        EventManager.Instance.RemoveListener<BaseSelectedEvent>(BaseSelectedEventHandler);
+        EventManager.Instance.RemoveListener<SpawnTurretEvent>(SpawnTurretEventHandler);
+        EventManager.Instance.RemoveListener<UpdateTimerEvent>(UpdateTimerEventHandler);
     }
 
     public void OnStarted()
@@ -35,6 +40,7 @@ public class LevelController : LevelManager, IController,ITick
 
     public void OnUpdate()
     {
+        EventManager.Instance.TriggerEvent(new UpdateTimerEvent());
         EventManager.Instance.TriggerEvent(new EnemySpawnEvent(Handler.CurrentWave,Handler.Timer));
         MonoHelper.Instance.FaceCamera(Handler.Camera, Handler.HouseSlider.transform);
     }

@@ -15,6 +15,7 @@ public class LevelHandler : MonoBehaviour
     public float Timer;
     public int CurrentWaveCount;
 
+
     [Space(10)]
     [Header("UI")]
     public TMP_Text TimerCount;
@@ -24,5 +25,7 @@ public class LevelHandler : MonoBehaviour
     [Space(10)]
     [Header("GameObjects")]
     public Transform HouseSlider;
+    public BaseHandler CurrentSelectedBase = null;
+    public GameObject SelectionPanel;
 
 }

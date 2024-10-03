@@ -36,9 +36,9 @@ public class EnemyData
 [System.Serializable]
 public class GridData
 {
-    public List<bool> grid; 
-    public int rows;    
-    public int columns;    
+    public List<bool> grid;
+    public int rows;
+    public int columns;
 }
 
 #endregion
@@ -50,6 +50,14 @@ public enum EnemyType
     Minion = 1,
     Elite = 2,
     Boss = 3
+}
+
+public enum BulletType
+{
+    None = 0,
+    Bullet = 1,
+    Rocket = 2,
+    Laser = 3
 }
 
 #endregion
