@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: LaserShooter
   m_EditorClassIdentifier: 
   AttackPower: 15
-  Range: 15
+  Range: 10
   Bullet: {fileID: 0}
